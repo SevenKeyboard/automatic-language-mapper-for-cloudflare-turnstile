@@ -1,10 +1,10 @@
 # Automatic Language Mapper for Simple Cloudflare Turnstile
-Contributors: sevenkeyboard
-Tags: cloudflare, turnstile, captcha, language, multilingual
-Requires at least: 6.9
-Tested up to: 6.9
-Stable tag: 1.0.0
-License: GPLv2 or later
+Contributors: sevenkeyboard  
+Tags: cloudflare, turnstile, captcha, language, multilingual  
+Requires at least: 6.9  
+Tested up to: 6.9  
+Stable tag: 1.0.0  
+License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Automatically maps the Cloudflare Turnstile widget language to the current site locale.
