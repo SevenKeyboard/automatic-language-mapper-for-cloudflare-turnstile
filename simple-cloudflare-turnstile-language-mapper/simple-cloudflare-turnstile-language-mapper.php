@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Automatic Language Mapper for Simple Cloudflare Turnstile
- * Description: Forces Turnstile to use the current site language instead of the saved plugin setting. Supports WPML or the native determine_locale() function.
+ * Description: Forces Turnstile to use the current site language instead of the saved plugin setting. Supports <strong>WPML</strong> or the native <code>determine_locale()</code> function.
  * Version: 1.0.0
  * Author: SevenKeyboard
  * Author URI: https://sevenkeyboard.com
@@ -12,22 +12,21 @@
  * Requires Plugins: simple-cloudflare-turnstile
  **/
 
+defined('ABSPATH') || exit;
+
 add_action('plugins_loaded', function () {
    add_filter('pre_option_cfturnstile_language', function ($default) {
-        if (
-            is_admin() &&
-            isset($_GET['page']) &&
-            $_GET['page'] === 'cfturnstile'
-        ) {
+        $page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+        if ( is_admin() && $page === 'cfturnstile' ) {
             return $default;
         }
-        $locale = sctlf_get_current_locale();
-        $turnstile_lang = sctlf_map_locale_to_turnstile_lang( $locale );
+        $locale = sctlm_get_current_locale();
+        $turnstile_lang = sctlm_map_locale_to_turnstile_lang( $locale );
         return $turnstile_lang;
     }, 99);
 }, 10);
 
-function sctlf_get_current_locale() {
+function sctlm_get_current_locale() {
     if ( function_exists( 'apply_filters' ) && has_filter( 'wpml_current_language' ) ) {
         $lang_code = apply_filters( 'wpml_current_language', null );
         $languages = apply_filters( 'wpml_active_languages', null, ['skip_missing' => 0] );
@@ -37,7 +36,7 @@ function sctlf_get_current_locale() {
     }
     return determine_locale();
 }
-function sctlf_map_locale_to_turnstile_lang( $locale ) {
+function sctlm_map_locale_to_turnstile_lang( $locale ) {
     // https://wp-kama.com/note/wp-locales-fill-list
     // https://developers.cloudflare.com/turnstile/reference/supported-languages/
     static $supported_languages = [
@@ -47,7 +46,7 @@ function sctlf_map_locale_to_turnstile_lang( $locale ) {
         'es', 'sv', 'tl', 'th', 'tr', 'uk', 'vi'
     ];
     $locale = strtolower($locale);
-    if ( $locale === 'zh_hk' ) return 'zh_tw'; // 香港中文版
+    if ( $locale === 'zh_hk' ) return 'zh-tw'; // 香港中文版
     if ( $locale === 'zh_tw' ) return 'zh-tw'; // 繁體中文
     $parts = explode('_', $locale);
     if ( ! isset($parts[0]) || $parts[0] === '' ) return 'auto';
@@ -59,6 +58,6 @@ function sctlf_map_locale_to_turnstile_lang( $locale ) {
 add_action('wp_footer', function () {
     echo "<div style='text-align:center; color:#888;'>[Turnstile Lang Override] ";
     echo "<strong>" . esc_html( get_option('cfturnstile_language') ) . "</strong>";
-    echo " (" . esc_html( sctlf_get_current_locale() ) . ")</div>";
+    echo " (" . esc_html( sctlm_get_current_locale() ) . ")</div>";
 });
 */
