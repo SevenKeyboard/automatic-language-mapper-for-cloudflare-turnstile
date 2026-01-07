@@ -20,14 +20,14 @@ add_action('plugins_loaded', function () {
         if ( is_admin() && $page === 'cfturnstile' ) {
             return $default;
         }
-        $locale = sctlm_get_current_locale();
-        $turnstile_lang = sctlm_map_locale_to_turnstile_lang( $locale );
+        $locale = almfct_get_current_locale();
+        $turnstile_lang = almfct_map_locale_to_turnstile_lang( $locale );
         return $turnstile_lang;
     }, 99);
 }, 10);
 
-function sctlm_get_current_locale() {
-    if ( function_exists( 'apply_filters' ) && has_filter( 'wpml_current_language' ) ) {
+function almfct_get_current_locale() {
+    if ( function_exists('apply_filters') && has_filter('wpml_current_language') ) {
         $lang_code = apply_filters( 'wpml_current_language', null );
         $languages = apply_filters( 'wpml_active_languages', null, ['skip_missing' => 0] );
         if ( ! empty( $lang_code ) && ! empty( $languages ) && ! empty( $languages[ $lang_code ]['default_locale'] ) ) {
@@ -36,7 +36,8 @@ function sctlm_get_current_locale() {
     }
     return determine_locale();
 }
-function sctlm_map_locale_to_turnstile_lang( $locale ) {
+
+function almfct_map_locale_to_turnstile_lang( $locale ) {
     // https://wp-kama.com/note/wp-locales-fill-list
     // https://developers.cloudflare.com/turnstile/reference/supported-languages/
     static $supported_languages = [
@@ -58,6 +59,6 @@ function sctlm_map_locale_to_turnstile_lang( $locale ) {
 add_action('wp_footer', function () {
     echo "<div style='text-align:center; color:#888;'>[Turnstile Lang Override] ";
     echo "<strong>" . esc_html( get_option('cfturnstile_language') ) . "</strong>";
-    echo " (" . esc_html( sctlm_get_current_locale() ) . ")</div>";
+    echo " (" . esc_html( almfct_get_current_locale() ) . ")</div>";
 });
 */
