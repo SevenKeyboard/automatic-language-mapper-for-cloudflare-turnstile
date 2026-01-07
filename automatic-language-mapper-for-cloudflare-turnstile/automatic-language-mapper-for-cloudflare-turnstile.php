@@ -46,9 +46,9 @@ function almfct_map_locale_to_turnstile_lang( $locale ) {
     // https://developers.cloudflare.com/turnstile/reference/supported-languages/
     static $supported_languages = [
         'ar', 'bg', 'zh', 'hr', 'cs', 'da', 'nl', 'en', 'fa', 'fi',
-        'fr', 'de', 'el', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko',
-        'lt', 'ms', 'nb', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk', 'sl',
-        'es', 'sv', 'tl', 'th', 'tr', 'uk', 'vi'
+        'fr', 'de', 'el', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'tlh',
+        'ko', 'lt', 'ms', 'nb', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk',
+        'sl', 'es', 'sv', 'tl', 'th', 'tr', 'uk', 'vi'
     ];
     $locale = strtolower( (string) $locale );
     $locale = str_replace( '-', '_', $locale );
